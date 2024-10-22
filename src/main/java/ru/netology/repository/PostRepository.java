@@ -31,8 +31,20 @@ public class PostRepository {
     }
 
     public Post save(Post post) {
-        counter++;
-        posts.put(counter, post.getContent());
+        if (post.getId() == 0) {
+            do {
+                counter++;
+            } while (posts.containsKey(counter));
+
+            posts.put(counter, post.getContent());
+        } else {
+            if (posts.containsKey(post.getId())) {
+                posts.replace(post.getId(), post.getContent());
+            } else {
+                posts.put(post.getId(), post.getContent());
+            }
+        }
+
         return post;
     }
 
