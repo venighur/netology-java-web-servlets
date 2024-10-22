@@ -1,5 +1,6 @@
 package ru.netology.repository;
 
+import ru.netology.exception.NotFoundException;
 import ru.netology.model.Post;
 
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ public class PostRepository {
     }
 
     public Optional<Post> getById(long id) {
+        if (!posts.containsKey(id)) {
+            throw new NotFoundException("Пост не найден");
+        }
         return Optional.of(new Post(id, posts.get(id)));
     }
 
